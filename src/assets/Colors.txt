@@ -1,0 +1,2 @@
+background: #F8FAFC
+dark: #E2E8F0
