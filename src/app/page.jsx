@@ -7,11 +7,8 @@ export default function HelloRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/main");
-    }, 2000);
-    return () => clearTimeout(timer);
+    router.push("/main");
   }, [router]);
 
-  return <h1>Hello</h1>;
+  return;
 }
