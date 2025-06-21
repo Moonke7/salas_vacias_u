@@ -5,6 +5,7 @@
   align-items: center;
   min-height: 100vh;
   background-color: #f8fafc;
+  overflow: hidden;
 }
 
 img {
@@ -73,6 +74,49 @@ h3 {
   cursor: pointer;
 }
 
+.profes{
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  color: #2b3040;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+  position: relative;
+}
+.profes input{
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #e2e8f0;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #2b3040;
+}
+
+.prof-list{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  list-style: none;
+  max-height: 110px;
+  position: absolute;
+  border-radius: 12px;
+  background: #f8fafc;
+  padding: 10px;
+  overflow-y: scroll;
+  align-items: start;
+  width: 100%;
+}
+.prof-list li{
+  padding: 10px;
+  font-size: 1rem;
+  color: #2b3040;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 footer{
   position: fixed;
   bottom: 0;
@@ -81,6 +125,7 @@ footer{
   text-align: center;
   padding: 10px;
   font-size: 0.9rem;
+  z-index: 100;
 }
 
 /* Responsive Design */

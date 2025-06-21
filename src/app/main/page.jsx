@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { salas_sin_contar as salasUnicas } from "@/assets/salas_unicas_sin_contar.js";
 import { salasUnicas as salasUnicasContadas } from "@/assets/salas_unicas.js";
+import { profes } from "@/assets/profes";
 import {
   indice_de_bloque_actual,
   salas_libres_por_calle,
@@ -15,6 +16,7 @@ const Main = () => {
     modulo: indice_de_bloque_actual(),
     dia: new Date().getDay(),
   });
+  const [professorSearched, setProfessorSearched] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,9 +96,40 @@ const Main = () => {
         <div className="salas-container">
           <h2>Salas disponibles:</h2>
           <ul>
-            <li onClick={() => handleSalaClick("V432")}>Vergara: {count.salasVergara}</li>
-            <li onClick={() => handleSalaClick("E441")}>Ejercito: {count.salasEjercito}</li>
+            <li onClick={() => handleSalaClick("V432")}>
+              Vergara: {count.salasVergara}
+            </li>
+            <li onClick={() => handleSalaClick("E441")}>
+              Ejercito: {count.salasEjercito}
+            </li>
           </ul>
+        </div>
+
+        <div className="profes">
+          <input
+            type="text"
+            placeholder="Buscar profesor..."
+            onChange={(e) => {
+              const searchTerm = e.target.value.toLowerCase();
+              setProfessorSearched(searchTerm);
+            }}
+            value={professorSearched}
+          />
+          {professorSearched && (
+            <ul className="prof-list">
+              {profes
+                .filter((profesor) =>
+                  profesor
+                    .toLowerCase()
+                    .includes(professorSearched.toLowerCase())
+                )
+                .map((profesor, index) => (
+                  <li key={index}>
+                    {profesor}
+                  </li>
+                ))}
+            </ul>
+          )}
         </div>
       </section>
     </div>
