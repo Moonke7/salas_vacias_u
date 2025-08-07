@@ -41,13 +41,13 @@ section {
   background: #f8fafc;
   padding: 30px;
   border-radius: 12px;
-  overflow-y: auto;
 }
 
-ul {
+#ulProff {
   max-height: 400px;
   overflow-y: auto;
 }
+
 li {
   display: flex;
   flex-direction: column;

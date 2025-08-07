@@ -43,7 +43,7 @@ const Main = () => {
         <h1>Profesor buscado:</h1>
         <h2>{data && data[0].node.teacher}</h2>
 
-        <ul>
+        <ul id="ulProff">
           {data &&
             data.map((item, index) => (
               <>
