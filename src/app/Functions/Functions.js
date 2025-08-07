@@ -15,13 +15,13 @@ export function indice_de_bloque_actual() {
   const minutos = date.getMinutes();
   const horaActual = `${hora}:${minutos < 10 ? "0" + minutos : minutos}:00`;
 
-  console.log("Hora actual:", horaActual);
+  //console.log("Hora actual:", horaActual);
   let indice;
   indice = bloques.findIndex((bloque) => {
     return horaActual >= bloque.inicio && horaActual <= bloque.fin;
   });
   if (indice === -1) {
-    console.log("Fuera de horario");
+    //console.log("Fuera de horario");
     indice = bloques.findIndex((bloque, i, arr) => {
       // Verifica que haya un siguiente bloque
       if (i < arr.length - 1) {
@@ -30,12 +30,12 @@ export function indice_de_bloque_actual() {
       return false;
     });
     if (indice + 1 < 7) {
-      console.log("Indice del bloque mas cercano siguiente:", indice + 1);
+      //console.log("Indice del bloque mas cercano siguiente:", indice + 1);
       return indice + 1;
     }
   }
 
-  console.log("Indice del bloque:", indice);
+  //console.log("Indice del bloque:", indice);
   return indice;
 }
 
@@ -62,21 +62,27 @@ export function salas_libres_por_calle(indiceBloque, calle, data) {
     );
   });
 
-  console.log("Salas desocupadas en la calle", calle, ":", salasDesocupadas);
+  //console.log("Salas desocupadas en la calle", calle, ":", salasDesocupadas);
   return salasDesocupadas;
 }
 
-export function buscar_profe(profe, data){
+export function buscar_profe(profe, data) {
   const dataFiltrada = data.filter((item) => {
     const { node } = item;
-    return node.teacher === profe;
+    const teacher = node.teacher.toLowerCase();
+    profe = profe.toLowerCase();
+
+    const nombreProfe = profe.split(" ")[0];
+    const apellidoProfe = profe.split(" ")[1] || "";
+
+    return teacher.includes(nombreProfe) && teacher.includes(apellidoProfe);
   });
 
   if (dataFiltrada.length > 0) {
-    console.log(`Profesor ${profe} encontrado en las siguientes salas:`, dataFiltrada);
+    //console.log(`Profesor ${profe} encontrado en las siguientes salas:`, dataFiltrada);
     return dataFiltrada;
   } else {
-    console.log(`Profesor ${profe} no encontrado.`);
+    //console.log(`Profesor ${profe} no encontrado.`);
     return [];
   }
 }

@@ -4,6 +4,7 @@ import { salas_sin_contar as salasUnicas } from "@/assets/salas_unicas_sin_conta
 import { salasUnicas as salasUnicasContadas } from "@/assets/salas_unicas.js";
 import { profes } from "@/assets/profes";
 import {
+  buscar_profe,
   indice_de_bloque_actual,
   salas_libres_por_calle,
 } from "../Functions/Functions";
@@ -18,6 +19,11 @@ const Main = () => {
   });
   const [professorSearched, setProfessorSearched] = useState("");
 
+  const InitialData = {
+    modulo: indice_de_bloque_actual(),
+    dia: new Date().getDay(),
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,15 +37,16 @@ const Main = () => {
         // transformar a json
         const result = await response.json();
         const data = result.data.allSalasUdps.edges;
+        setData(data);
 
         const salasVergara = salas_libres_por_calle(
-          indice_de_bloque_actual(),
+          InitialData.modulo,
           "V432",
           data
         );
 
         const salasEjercito = salas_libres_por_calle(
-          indice_de_bloque_actual(),
+          InitialData.modulo,
           "E441",
           data
         );
@@ -82,6 +89,12 @@ const Main = () => {
     "Sábado",
   ];
 
+  const saveOnLocalStorage = (key, value) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+  };
+
   return (
     <div className="main-container">
       <img
@@ -91,10 +104,10 @@ const Main = () => {
 
       <section>
         <h1>Salas Vacías</h1>
-        <h3>Viendo en el modulo: {bloques[data.modulo]}</h3>
-        <h3>Dia: {dias[data.dia]}</h3>
+        <h3>Viendo en el modulo: {bloques[InitialData.modulo]}</h3>
+        <h3>Dia: {dias[InitialData.dia]}</h3>
         <div className="salas-container">
-          <h2>Salas disponibles:</h2>
+          <h2>Salas disponibles: {count.salasVergara + count.salasEjercito}</h2>
           <ul>
             <li onClick={() => handleSalaClick("V432")}>
               Vergara: {count.salasVergara}
@@ -124,7 +137,18 @@ const Main = () => {
                     .includes(professorSearched.toLowerCase())
                 )
                 .map((profesor, index) => (
-                  <li key={index}>
+                  <li
+                    key={index}
+                    onClick={() => {
+                      saveOnLocalStorage(
+                        "clasesDeProfesorBuscado",
+                        buscar_profe(profesor, data)
+                      );
+
+                      // enviar al usuario a la pagina del profesor
+                      router.push("/profesor");
+                    }}
+                  >
                     {profesor}
                   </li>
                 ))}
